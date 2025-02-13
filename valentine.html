@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Valentine's Interactive Card</title>
+  <style>
+    body {
+      background-color: #ffccd5;
+      font-family: 'Helvetica', sans-serif;
+      text-align: center;
+      padding: 30px;
+    }
+    .heart {
+      position: relative;
+      width: 100px;
+      height: 90px;
+      margin: 20px auto;
+      background: #ff6f91;
+      transform: rotate(-45deg);
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .heart:before,
+    .heart:after {
+      content: "";
+      position: absolute;
+      width: 100px;
+      height: 90px;
+      background: #ff6f91;
+      border-radius: 50%;
+    }
+    .heart:before {
+      top: -50px;
+      left: 0;
+    }
+    .heart:after {
+      left: 50px;
+      top: 0;
+    }
+    .heart:hover {
+      transform: rotate(-45deg) scale(1.1);
+    }
+    #message {
+      margin-top: 40px;
+      font-size: 1.3em;
+      color: #b30000;
+      opacity: 0;
+      transition: opacity 0.5s;
+    }
+  </style>
+</head>
+<body>
+  <h1>Happy Valentine's Day!</h1>
+  <div class="heart" onclick="revealMessage()"></div>
+  <div id="message">You are so loved! Thanks for being an amazing friend!</div>
+
+  <script>
+    function revealMessage() {
+      const message = document.getElementById('message');
+      message.style.opacity = (message.style.opacity === '1') ? '0' : '1';
+    }
+  </script>
+</body>
+</html>
