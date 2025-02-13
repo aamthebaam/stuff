@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Happy Valentine's Day</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <style>
+    /* RESET */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    /* BODY */
+    body {
+      background: linear-gradient(180deg, #ffc0e6 0%, #ff8fd8 100%);
+      font-family: 'Press Start 2P', sans-serif;
+      overflow: hidden;
+      height: 100vh;
+      position: relative;
+    }
+    h1 {
+      text-align: center;
+      margin-top: 1rem;
+      font-size: 1.3rem;
+      color: #62005b;
+      text-shadow: 1px 1px 0 #ffebf7;
+      z-index: 100;
+      position: relative;
+    }
+    
+    /* ---------- Scene Container (Centered) ---------- */
+    .scene {
+      position: absolute;
+      top: 100px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 400px;
+      height: 400px;
+      z-index: 50;
+    }
+    
+    /* ---------- Floating Pixel Hearts ---------- */
+    .floating-heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-color: #ff1e46;
+      clip-path: polygon(50% 0%, 100% 30%, 80% 100%, 50% 80%, 20% 100%, 0% 30%);
+      opacity: 0.8;
+      animation: floatHeart 12s linear infinite;
+      pointer-events: none;
+    }
+    @keyframes floatHeart {
+      0%   { transform: translateY(100vh) scale(0.5); opacity: 0; }
+      20%  { opacity: 1; }
+      50%  { transform: translateY(50vh) scale(1); opacity: 0.8; }
+      80%  { opacity: 1; }
+      100% { transform: translateY(-10vh) scale(0.5); opacity: 0; }
+    }
+    
+    /* ---------- Detailed Pixel Egg ---------- */
+    .egg {
+      position: absolute;
+      width: 140px;
+      height: 180px;
+      top: 60px;
+      left: 130px;
+      animation: eggShake 3s ease-in-out forwards;
+      transform-origin: center;
+    }
+    .egg-shell {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: #fffbe2;
+      border: 4px solid #bfae98;
+      border-radius: 50% 50% 45% 45%;
+      box-shadow: inset 0 0 0 4px rgba(0,0,0,0.1);
+    }
+    .egg-shell:before, .egg-shell:after {
+      content: "";
+      position: absolute;
+      width: 30px;
+      height: 4px;
+      background: #ffead1;
+    }
+    .egg-shell:before { top: 30px; left: 10px; }
+    .egg-shell:after { bottom: 40px; right: 10px; }
+    .crack-line {
+      position: absolute;
+      width: 90%;
+      height: 2px;
+      background: repeating-linear-gradient(
+        to right,
+        #ff8fd8 0,
+        #ff8fd8 4px,
+        #fffbe2 4px,
+        #fffbe2 8px
+      );
+      top: 50%;
+      left: 5%;
+      z-index: 5;
+    }
+    @keyframes eggShake {
+      0%, 10%, 20%, 30%, 50%, 70%, 90% { transform: rotate(0deg); }
+      5%, 15%, 25%, 35%, 45%, 55%, 65%, 75%, 85%, 95% { transform: rotate(1deg); }
+      100% { transform: rotate(0deg); }
+    }
+    .egg.cracked { animation: none; }
+    .egg.cracked .crack-line { display: none; }
+    .egg-top, .egg-bottom {
+      position: absolute;
+      width: 100%;
+      height: 50%;
+      background: #fffbe2;
+      border: 4px solid #bfae98;
+      overflow: hidden;
+    }
+    .egg-top {
+      top: 0;
+      border-radius: 50% 50% 0 0;
+      transform-origin: bottom;
+      z-index: -1;
+    }
+    .egg-bottom {
+      bottom: 0;
+      border-radius: 0 0 50% 50%;
+      transform-origin: top;
+      z-index: -1;
+    }
+    .egg.cracked .egg-top {
+      animation: eggTopCrack 1s forwards;
+      z-index: 10;
+    }
+    @keyframes eggTopCrack {
+      0% { transform: translateY(0) rotate(0); }
+      100% { transform: translateY(-90px) rotate(-30deg); }
+    }
+    .egg.cracked .egg-bottom {
+      animation: eggBottomCrack 1s forwards;
+      z-index: 10;
+    }
+    @keyframes eggBottomCrack {
+      0% { transform: translateY(0) rotate(0); }
+      100% { transform: translateY(90px) rotate(30deg); }
+    }
+    
+    /* ---------- Boss Chick (Detailed Pixel Art) ---------- */
+    .chick {
+      position: absolute;
+      top: 150px;
+      left: 170px;
+      width: 50px;
+      height: 70px;
+      display: none;
+      cursor: pointer;
+      z-index: 20;
+    }
+    .chick-head {
+      position: absolute;
+      top: -10px;
+      left: 5px;
+      width: 40px;
+      height: 25px;
+      background-color: #fff000;
+      border: 3px solid #000;
+      z-index: 2;
+    }
+    .chick-body {
+      position: absolute;
+      top: 15px;
+      left: 5px;
+      width: 40px;
+      height: 35px;
+      background-color: #fff000;
+      border: 3px solid #000;
+      z-index: 1;
+    }
+    .wing-left, .wing-right {
+      position: absolute;
+      top: 20px;
+      width: 14px;
+      height: 12px;
+      background-color: #fff000;
+      border: 3px solid #000;
+      z-index: 0;
+    }
+    .wing-left { left: -12px; }
+    .wing-right { right: -12px; }
+    .foot-left, .foot-right {
+      position: absolute;
+      bottom: -6px;
+      width: 10px;
+      height: 6px;
+      background-color: #ff8e00;
+      border: 3px solid #000;
+    }
+    .foot-left { left: 5px; }
+    .foot-right { right: 5px; }
+    .sunglasses {
+      position: absolute;
+      top: 4px;
+      left: 5px;
+      width: 40px;
+      height: 6px;
+      background-color: #000;
+      z-index: 3;
+    }
+    .collar {
+      position: absolute;
+      top: 20px;
+      left: 0;
+      width: 50px;
+      height: 6px;
+      background-color: #333;
+      display: flex;
+      justify-content: space-evenly;
+      z-index: 3;
+    }
+    .collar::before, .collar::after {
+      content: "";
+      width: 6px;
+      height: 6px;
+      background-color: #ff0057;
+    }
+    .chick-heart {
+      position: absolute;
+      top: -20px;
+      left: 17px;
+      width: 20px;
+      height: 20px;
+      background-color: #e00;
+      clip-path: polygon(50% 0%, 100% 30%, 80% 100%, 50% 80%, 20% 100%, 0% 30%);
+      display: none;
+      z-index: 25;
+    }
+    .speech-bubble {
+      position: absolute;
+      display: none;
+      width: 240px;
+      padding: 10px;
+      background-color: #ffdaf1;
+      border: 4px solid #d1007f;
+      border-radius: 8px;
+      text-align: center;
+      font-size: 10px;
+      line-height: 1.4;
+      left: -95px;
+      top: -110px;
+      z-index: 30;
+    }
+    .speech-bubble::after {
+      content: "";
+      position: absolute;
+      bottom: -18px;
+      left: 35%;
+      border-width: 10px;
+      border-style: solid;
+      border-color: #d1007f transparent transparent transparent;
+    }
+    .speech-bubble.visible {
+      display: block;
+      animation: bubblePop 1s ease-in-out;
+    }
+    @keyframes bubblePop {
+      0%   { transform: scale(0); }
+      60%  { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+    .chickBounce {
+      animation: bounceAround 4s infinite linear alternate;
+    }
+    @keyframes bounceAround {
+      0%   { transform: translate(0, 0); }
+      20%  { transform: translate(50px, -30px); }
+      40%  { transform: translate(60px, 40px); }
+      60%  { transform: translate(-40px, 20px); }
+      80%  { transform: translate(30px, -40px); }
+      100% { transform: translate(-20px, 30px); }
+    }
+    /* ---------- Burst Hearts on Chick Click ---------- */
+    .burst-heart {
+      position: absolute;
+      width: 15px;
+      height: 15px;
+      background-color: #ff1e46;
+      clip-path: polygon(50% 0%, 100% 30%, 80% 100%, 50% 80%, 20% 100%, 0% 30%);
+      pointer-events: none;
+      opacity: 1;
+      animation: burstHeart 1s ease-out forwards;
+      z-index: 100;
+    }
+    @keyframes burstHeart {
+      0%   { transform: translate(0, 0) scale(1); opacity: 1; }
+      100% { transform: translate(var(--dx), var(--dy)) scale(0.5); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <h1>Happy Valentine's Day</h1>
+  
+  <div class="scene">
+    <!-- Detailed Pixel Egg -->
+    <div class="egg" id="egg">
+      <div class="egg-shell"></div>
+      <div class="crack-line"></div>
+      <div class="egg-top"></div>
+      <div class="egg-bottom"></div>
+    </div>
+    <!-- Boss Chick -->
+    <div class="chick" id="chick">
+      <div class="chick-head"></div>
+      <div class="chick-body"></div>
+      <div class="wing-left"></div>
+      <div class="wing-right"></div>
+      <div class="foot-left"></div>
+      <div class="foot-right"></div>
+      <div class="sunglasses"></div>
+      <div class="collar"></div>
+      <div class="chick-heart" id="chickHeart"></div>
+      <div class="speech-bubble" id="speech">
+        I love you and wish you a<br>Happy Valentine's Day, Manal!
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    // Create floating hearts continuously
+    function createFloatingHeart() {
+      const heart = document.createElement('div');
+      heart.classList.add('floating-heart');
+      heart.style.left = Math.random() * 100 + 'vw';
+      const duration = Math.random() * 10 + 10;
+      heart.style.animationDuration = duration + 's';
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), duration * 1000);
+    }
+    setInterval(createFloatingHeart, 1000);
+    
+    // Egg shakes for 3 seconds then cracks open
+    setTimeout(() => {
+      document.getElementById('egg').classList.add('cracked');
+    }, 3000);
+    
+    // After cracking, reveal the chick with bouncing & speech bubble
+    setTimeout(() => {
+      const chick = document.getElementById('chick');
+      chick.style.display = 'block';
+      chick.classList.add('chickBounce');
+      document.getElementById('chickHeart').style.display = 'block';
+      setTimeout(() => {
+        document.getElementById('speech').classList.add('visible');
+      }, 1000);
+    }, 4200);
+    
+    // Interactive burst hearts when clicking the chick
+    document.getElementById('chick').addEventListener('click', function(e) {
+      const rect = this.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      for (let i = 0; i < 5; i++) {
+        const burst = document.createElement('div');
+        burst.classList.add('burst-heart');
+        burst.style.left = centerX - 7.5 + 'px';
+        burst.style.top = centerY - 7.5 + 'px';
+        const dx = (Math.random() - 0.5) * 100;
+        const dy = (Math.random() - 0.5) * 100;
+        burst.style.setProperty('--dx', dx + 'px');
+        burst.style.setProperty('--dy', dy + 'px');
+        document.body.appendChild(burst);
+        setTimeout(() => burst.remove(), 1000);
+      }
+    });
+  </script>
+</body>
+</html>
